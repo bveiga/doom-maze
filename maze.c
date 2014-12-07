@@ -52,6 +52,286 @@ void draw_wall(){
 
 void draw_maze() {
 	int i;
+	glPushMatrix();
+		glPushMatrix();
+			glTranslatef(10.0, 0.0, 0.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(10.0, 0.0, -10.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(10.0, 0.0, -30.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(0.0, 0.0, -40.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(20.0, 0.0, -10.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(20.0, 0.0, -30.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(20.0, 0.0, -40.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(20.0, 0.0, -70.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(30.0, 0.0, -10.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(30.0, 0.0, -30.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(30.0, 0.0, -50.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(30.0, 0.0, -70.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(40.0, 0.0, 0.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(40.0, 0.0, -20.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(40.0, 0.0, -60.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(50.0, 0.0, -10.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(50.0, 0.0, -80.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(60.0, 0.0, -30.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(60.0, 0.0, -50.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(70.0, 0.0, -30.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(70.0, 0.0, -50.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(70.0, 0.0, -60.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(70.0, 0.0, -70.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(80.0, 0.0, -10.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(80.0, 0.0, -40.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(80.0, 0.0, -70.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(80.0, 0.0, -80.0);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			draw_wall();
+		glPopMatrix();
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(0.0, 0.0, -30.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(0.0, 0.0, -70.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(10.0, 0.0, -20.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(10.0, 0.0, -60.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(10.0, 0.0, -70.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(10.0, 0.0, -80.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(20.0, 0.0, -60.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(20.0, 0.0, -30.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(30.0, 0.0, -20.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(30.0, 0.0, -30.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(30.0, 0.0, -60.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(30.0, 0.0, -80.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(40.0, 0.0, -20.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(40.0, 0.0, -70.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(40.0, 0.0, -80.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(50.0, 0.0, -20.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(50.0, 0.0, -30.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(50.0, 0.0, -60.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(50.0, 0.0, -70.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(50.0, 0.0, -10.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(60.0, 0.0, -10.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(60.0, 0.0, -20.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(60.0, 0.0, -80.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(70.0, 0.0, -20.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(70.0, 0.0, -30.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(70.0, 0.0, -50.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(70.0, 0.0, -60.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(80.0, 0.0, -30.0);
+		draw_wall();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(80.0, 0.0, -60.0);
+		draw_wall();
+	glPopMatrix();
 
 	// Drawing Maze Floor 
 	glBegin(GL_QUADS);
