@@ -1,0 +1,132 @@
+
+draw_wall();
+
+glPushMatrix();
+	glTranslatef(0.0, 0.0, -10.0);
+	draw_wall();
+glPopMatrix();
+
+glPushMatrix();
+	glTranslatef(0.0, 0.0, -30.0);
+	draw_wall();
+glPopMatrix();
+
+glPushMatrix();
+	glTranslatef(0.0, 0.0, -40.0);
+	draw_wall();
+glPopMatrix();
+
+glPushMatrix();
+	glTranslatef(10.0, 0.0, -10.0);
+	draw_wall();
+glPopMatrix();
+
+glPushMatrix();
+	glTranslatef(10.0, 0.0, -30.0);
+	draw_wall();
+glPopMatrix();
+
+glPushMatrix();
+	glTranslatef(10.0, 0.0, -40.0);
+	draw_wall();
+glPopMatrix();
+
+glPushMatrix();
+	glTranslatef(10.0, 0.0, -70.0);
+	draw_wall();
+glPopMatrix();
+
+glPushMatrix();
+	glTranslatef(20.0, 0.0, -10.0);
+	draw_wall();
+glPopMatrix();
+
+glPushMatrix();
+	glTranslatef(20.0, 0.0, -30.0);
+	draw_wall();
+glPopMatrix();
+
+glPushMatrix();
+	glTranslatef(20.0, 0.0, -50.0);
+	draw_wall();
+glPopMatrix();
+
+glPushMatrix();
+	glTranslatef(20.0, 0.0, -70.0);
+	draw_wall();
+glPopMatrix();
+
+glPushMatrix();
+	glTranslatef(30.0, 0.0, 0.0);
+	draw_wall();
+glPopMatrix();
+
+glPushMatrix();
+	glTranslatef(30.0, 0.0, -20.0);
+	draw_wall();
+glPopMatrix();
+
+glPushMatrix();
+	glTranslatef(30.0, 0.0, -60.0);
+	draw_wall();
+glPopMatrix();
+
+glPushMatrix();
+	glTranslatef(40.0, 0.0, -10.0);
+	draw_wall();
+glPopMatrix();
+
+glPushMatrix();
+	glTranslatef(40.0, 0.0, -80.0);
+	draw_wall();
+glPopMatrix();
+
+glPushMatrix();
+	glTranslatef(50.0, 0.0, -30.0);
+	draw_wall();
+glPopMatrix();
+
+glPushMatrix();
+	glTranslatef(50.0, 0.0, -50.0);
+	draw_wall();
+glPopMatrix();
+
+glPushMatrix();
+	glTranslatef(60.0, 0.0, -30.0);
+	draw_wall();
+glPopMatrix();
+
+glPushMatrix();
+	glTranslatef(60.0, 0.0, -50.0);
+	draw_wall();
+glPopMatrix();
+
+glPushMatrix();
+	glTranslatef(60.0, 0.0, -60.0);
+	draw_wall();
+glPopMatrix();
+
+glPushMatrix();
+	glTranslatef(60.0, 0.0, -70.0);
+	draw_wall();
+glPopMatrix();
+
+glPushMatrix();
+	glTranslatef(70.0, 0.0, -10.0);
+	draw_wall();
+glPopMatrix();
+
+glPushMatrix();
+	glTranslatef(70.0, 0.0, -40.0);
+	draw_wall();
+glPopMatrix();
+
+glPushMatrix();
+	glTranslatef(70.0, 0.0, -70.0);
+	draw_wall();
+glPopMatrix();
+
+glPushMatrix();
+	glTranslatef(70.0, 0.0, -80.0);
+	draw_wall();
+glPopMatrix();
