@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
 #ifdef __APPLE__  // include Mac OS X verions of headers
 #  include <OpenGL/OpenGL.h>
 #  include <GLUT/glut.h>
@@ -10,6 +13,8 @@
 int win_width = 800;
 int win_height = 800;
 
+unsigned int texture[2];
+
 float camera_x = 0.0;
 float camera_y = 0.0;
 float camera_z = 0.0;
@@ -17,37 +22,113 @@ float camera_zoom = 60.0;
 
 // g++ -o maze maze.cpp -lglut -lGL -lGLU
 
-void draw_wall(){
-	glColor3f(0.0, 0.0, 0.5);
-	glBegin( GL_QUADS );
-		//FRONTFACE
-		glVertex3f( 0.0, 0.0, 0.5);
-		glVertex3f( 10.0, 0.0, 0.5);
-		glVertex3f( 10.0, 10.0, 0.5);
-		glVertex3f( 0.0, 10.0, 0.5);
-		//BACKFACE
-		glVertex3f( 0.0, 0.0, -0.5);
-		glVertex3f( 0.0, 10.0, -0.5);
-		glVertex3f( 10.0, 10.0, -0.5);
-		glVertex3f( 10.0, 0.0, -0.5);
+/*
+ *  Print message to stderr and exit
+ */
+void fatal(const char* format , ...)
+{
+   va_list args;
+   va_start(args,format);
+   vfprintf(stderr,format,args);
+   va_end(args);
+   exit(1);
+}
+unsigned int LoadTexBMP(char* file)
+{
+   unsigned int   texture;     // Texture name
+   FILE*          f;           // File pointer
+   char           magic[2];    // Image magic
+   unsigned int   dx,dy,size;  // Image dimensions
+   unsigned short nbp,bpp;     // Planes and bits per pixel
+   unsigned char* image;       // Image data
+   int            k;           // Counter
 
-		glColor3f(0.0, 0.0, 1.0);
+   //  Open file
+   f = fopen(file,"rb");
+   if (!f) fatal("Cannot open file %s\n",file);
+   //  Check image magic
+   if (fread(magic,2,1,f)!=1) fatal("Cannot read magic from %s\n",file);
+   if (strncmp(magic,"BM",2)) fatal("Image magic not BMP in %s\n",file);
+   //  Seek to and read header
+   fseek(f,16,SEEK_CUR);
+   if (fread(&dx ,4,1,f)!=1 || fread(&dy ,4,1,f)!=1 || fread(&nbp,2,1,f)!=1 || fread(&bpp,2,1,f)!=1)
+     fatal("Cannot read header from %s\n",file);
+   //  Check image parameters
+   if (nbp!=1) fatal("%s bit planes is not 1: %d\n",file,nbp);
+   if (bpp!=24) fatal("%s bits per pixel is not 24: %d\n",file,bpp);
+#ifndef GL_VERSION_2_0
+   //  OpenGL 2.0 lifts the restriction that texture size must be a power of two
+   for (k=1;k<dx;k++);
+   if (k!=dx) fatal("%s image width not a power of two: %d\n",file,dx);
+   for (k=1;k<dy;k++);
+   if (k!=dy) fatal("%s image height not a power of two: %d\n",file,dy);
+#endif
+
+   //  Allocate image memory
+   size = 3*dx*dy;
+   image = (unsigned char*) malloc(size);
+   if (!image) fatal("Cannot allocate %d bytes of memory for image %s\n",size,file);
+   //  Seek to and read image
+   fseek(f,24,SEEK_CUR);
+   if (fread(image,size,1,f)!=1) fatal("Error reading data from image %s\n",file);
+   fclose(f);
+   //  Reverse colors (BGR -> RGB)
+   for (k=0;k<size;k+=3)
+   {
+      unsigned char temp = image[k];
+      image[k]   = image[k+2];
+      image[k+2] = temp;
+   }
+
+   //  Generate 2D texture
+   glGenTextures(1,&texture);
+   glBindTexture(GL_TEXTURE_2D,texture);
+   //  Copy image
+   glTexImage2D(GL_TEXTURE_2D,0,3,dx,dy,0,GL_RGB,GL_UNSIGNED_BYTE,image);
+   if (glGetError()) fatal("Error in glTexImage2D %s %dx%d\n",file,dx,dy);
+   //  Scale linearly when image size doesn't match
+   glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+   glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+
+   //  Free image memory
+   free(image);
+   //  Return texture name
+   return texture;
+}
+
+void draw_wall(){
+	glEnable(GL_TEXTURE_2D);
+	glBegin( GL_QUADS );
+		glColor3f(0.6, 0.0, 0.0);
+		//FRONTFACE
+		glTexCoord2f(0.0, 0.0); glVertex3f( 0.0, 0.0, 0.5);
+		glTexCoord2f(1.0, 0.0); glVertex3f( 10.0, 0.0, 0.5);
+		glTexCoord2f(1.0, 1.0); glVertex3f( 10.0, 10.0, 0.5);
+		glTexCoord2f(0.0, 1.0); glVertex3f( 0.0, 10.0, 0.5);
+		//BACKFACE
+		glTexCoord2f(1.0, 0.0); glVertex3f( 0.0, 0.0, -0.5);
+		glTexCoord2f(1.0, 1.0); glVertex3f( 0.0, 10.0, -0.5);
+		glTexCoord2f(0.0, 1.0); glVertex3f( 10.0, 10.0, -0.5);
+		glTexCoord2f(0.0, 0.0); glVertex3f( 10.0, 0.0, -0.5);
+
+		glColor3f(0.3, 0.0, 0.0);
 		//TOP FACE
-		glVertex3f( 0.0, 10.0, -0.5);
-		glVertex3f( 10.0, 10.0, -0.5);
-		glVertex3f( 10.0, 10.0, 0.5);
-		glVertex3f( 0.0, 10.0, 0.5);
+		glTexCoord2f(0.0, 0.9); glVertex3f( 0.0, 10.0, 0.5);
+		glTexCoord2f(1.0, 0.9); glVertex3f( 10.0, 10.0, 0.5);
+		glTexCoord2f(1.0, 1.0); glVertex3f( 10.0, 10.0, -0.5);
+		glTexCoord2f(0.0, 1.0); glVertex3f( 0.0, 10.0, -0.5);
 		//LEFT FACE
-		glVertex3f( 0.0, 0.0, 0.5);
-		glVertex3f( 0.0, 10.0, 0.5);
-		glVertex3f( 0.0, 10.0, -0.5);
-		glVertex3f( 0.0, 0.0, -0.5);
+		glTexCoord2f(0.1, 0.0); glVertex3f( 0.0, 0.0, 0.5);
+		glTexCoord2f(0.1, 1.0); glVertex3f( 0.0, 10.0, 0.5);
+		glTexCoord2f(0.0, 1.0); glVertex3f( 0.0, 10.0, -0.5);
+		glTexCoord2f(0.0, 0.0); glVertex3f( 0.0, 0.0, -0.5);
 		//RIGHT FACE
-		glVertex3f( 10.0, 0.0, -0.5);
-		glVertex3f( 10.0, 10.0, -0.5);
-		glVertex3f( 10.0, 10.0, 0.5);
-		glVertex3f( 10.0, 0.0, 0.5);
+		glTexCoord2f(0.0, 0.0); glVertex3f( 10.0, 0.0, -0.5);
+		glTexCoord2f(0.0, 1.0); glVertex3f( 10.0, 10.0, -0.5);
+		glTexCoord2f(0.1, 1.0); glVertex3f( 10.0, 10.0, 0.5);
+		glTexCoord2f(0.1, 0.0); glVertex3f( 10.0, 0.0, 0.5);
 	glEnd();
+	glDisable(GL_TEXTURE_2D);
 }
 
 void draw_maze() {
@@ -335,7 +416,7 @@ void draw_maze() {
 
 	// Drawing Maze Floor 
 	glBegin(GL_QUADS);
-		glColor3f(0.0, 1.0, 0.0);
+		glColor3f(0.0, 0.4, 0.0);
 		glVertex3f(0.0, 0.0, 0.0);
 	   	glVertex3f(90.0, 0.0, 0.0);
 	   	glVertex3f(90.0, 0.0, -90.0);
@@ -374,6 +455,9 @@ void set_projection() {
 	glLoadIdentity();
 
 	gluPerspective(camera_zoom, (GLfloat)win_width / (GLfloat)win_height, 1.00, 100.0);
+
+	glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 }
 
 void set_viewpoint() {
@@ -443,6 +527,7 @@ int main(int argc, char** argv) {
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow( "MAZE" );
 	Init();
+	texture[0] = LoadTexBMP("textures/wall_texture800x800.bmp");
 
 	// Set Callback Functions
 	glutDisplayFunc(display);
