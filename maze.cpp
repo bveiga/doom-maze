@@ -90,6 +90,20 @@ static void display() {
 
 	set_viewpoint();
 
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+
+
+
+	// Light Position
+	glPushMatrix();
+		glRotatef(-90.0, 0.0f, 1.0f, 0.0f);
+		GLfloat lightpos[] = {45.0f, 40.0f, -45.0f, 0.0f};
+		// GLfloat lightspot[] = {0.0, 1.0, 0.0};
+		glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
+		// glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, lightspot);
+	glPopMatrix();
+
 	draw_maze();
 	// Local iterator to traverse manVector.
 	vector<Man>::iterator localManVectorIterator;
@@ -208,7 +222,7 @@ void keyboard2(int key, int x, int y) {
 
 int main(int argc, char** argv) {
 	glutInit(&argc, argv);
-	glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+	glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 	glutInitWindowSize( 800, 800);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow( "MAZE" );

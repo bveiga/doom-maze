@@ -344,6 +344,7 @@ void Man::decrementPartAngle()
 // Function to draw man.
 void Man::draw()
 {
+	glEnable(GL_COLOR_MATERIAL);
 	glPushMatrix(); 
 
 	// Up and forward translations.
@@ -390,7 +391,7 @@ void Man::draw()
 		glRotatef(partAngles[2], 1.0, 0.0, 0.0);
 		glTranslatef(0.0, 0.4, 0.0);
 		glPushMatrix();
-			glColor3f(1.0, 0.0, 0.0);
+			glColor3f(0.3, 0.3, 0.3);
 			glScalef(0.3, 0.8, 0.3);
 			glutSolidCube(1.0);
 		glPopMatrix();
@@ -413,7 +414,7 @@ void Man::draw()
 		glRotatef(partAngles[4], 1.0, 0.0, 0.0);
 		glTranslatef(0.0, 0.4, 0.0);
 		glPushMatrix();
-			glColor3f(1.0, 0.0, 0.0);
+			glColor3f(0.3, 0.3, 0.3);
 			glScalef(0.3, 0.8, 0.3);
 			glutSolidCube(1.0);
 		glPopMatrix();
@@ -427,7 +428,7 @@ void Man::draw()
 		glRotatef(partAngles[5], 1.0, 0.0, 0.0);
 		glTranslatef(0.0, -0.75, 0.0);
 		glPushMatrix(); 
-			glColor3f(1.0, 0.0, 0.0);
+			glColor3f(0.3, 0.3, 0.3);
 			glScalef(0.3, 1.5, 0.3);
 			glutSolidCube(1.0);
 		glPopMatrix();
@@ -460,7 +461,7 @@ void Man::draw()
 		glRotatef(partAngles[7], 1.0, 0.0, 0.0);
 		glTranslatef(0.0, -0.75, 0.0);
 		glPushMatrix();
-			glColor3f(1.0, 0.0, 0.0);
+			glColor3f(0.3, 0.3, 0.3);
 			glScalef(0.3, 1.5, 0.3);
 			glutSolidCube(1.0);
 		glPopMatrix();
@@ -486,7 +487,8 @@ void Man::draw()
 	glPopMatrix();
 	// Right upper and lower leg with foot end.
 
-	glPopMatrix(); 
+	glPopMatrix();
+	glDisable(GL_COLOR_MATERIAL);
 }
 
 // Function to output configurations data to file.
@@ -590,32 +592,39 @@ void Man::writeData()
  *******************************************************************************/
 void draw_fountain() {
 	GLUquadricObj *obj = gluNewQuadric();	// mac
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glPushMatrix();
-		glColor3f(0.8, 0.8, 0.8);
+		glEnable( GL_BLEND );
 		glTranslatef(45.0, 1.0, -45.0);
 		glRotatef(90.0, 1.0, 0.0, 0.0);
-		// mac
+		//Bottom Cylinder Base
+		glColor3f(0.8, 0.8, 0.8);
 		gluCylinder(obj, 5.0, 5.0, 1.0, 20, 20);
-		gluDisk(obj, 0.0, 5.0, 20, 20);
-		// linux
-		// glutSolidCylinder(5.0, 1.0, 20, 20);
-
-		glColor3f(1.0, 0.0, 0.0);
+		glPushMatrix();
+			//'Water' in Bottom Cylinder Base
+			glColor4f(0.3, 0.5, 1.0, 0.85);
+			gluDisk(obj, 0.0, 5.0, 20, 20);
+		glPopMatrix();
+		//TOP Cylinder Base
+		glColor3f(0.8, 0.8, 0.8);
 		glTranslatef(0.0, 0.0, -4.0);
-		// mac
 		gluCylinder(obj, 2.5, 2.5, 0.5, 20, 20);
+		glPushMatrix();
+			//'Water' in TOP Cylinder Base
+			glColor4f(0.3, 0.5, 1.0, 0.85);
+			gluDisk(obj, 0.0, 2.5, 20, 20);
+		glPopMatrix();
+		//Falling water
+		glColor4f(0.3, 0.5, 1.0, 0.25);
+		gluCylinder(obj, 2.5, 2.5, 4.5, 20, 20);
 		gluDisk(obj, 0.0, 2.5, 20, 20);
-		// linux
-		// glutSolidCylinder(2.5, 0.5, 20, 20);	
-
-		glColor3f(0.4, 0.4, 0.4);
+		//Center cylinder
+		glDisable( GL_BLEND );
+		glColor4f(0.4, 0.4, 0.4, 1.0);
 		glTranslatef(0.0, 0.0, -2.0);
-		// mac
 		gluCylinder(obj, 0.35, 0.35, 20.0, 20, 20);
 		gluDisk(obj, 0.0, 0.35, 20, 20);
-		// linux
-		// glutSolidCylinder(0.35, 20.0, 20, 20);
 	glPopMatrix();
 }
 
@@ -655,7 +664,10 @@ void draw_wall(){
 }
 
 void draw_maze() {
+
+	glEnable(GL_COLOR_MATERIAL);
 	draw_fountain();
+	glDisable(GL_COLOR_MATERIAL);
 
 	string name = "textures/wall_texture800x800.bmp";
 	texture[0] = LoadTexBMP(strdup(name.c_str()));
@@ -943,13 +955,13 @@ void draw_maze() {
 	glPopMatrix();
 
 	// Drawing Maze Floor
-	name = "textures/floor_texture800x800.bmp";
+	name = "textures/floor2.bmp";
 	texture[1] = LoadTexBMP(strdup(name.c_str()));
 	glEnable(GL_TEXTURE_2D);
 	glBegin(GL_QUADS);
-		glColor3f(0.0, 0.4, 0.0);
-		glTexCoord2f(0.0, 0.9); glVertex3f(0.0, 0.0, 0.0);
-	   	glTexCoord2f(1.0, 0.9); glVertex3f(90.0, 0.0, 0.0);
+		glColor3f(0.75, 0.75, 0.75);
+		glTexCoord2f(0.0, 0.0); glVertex3f(0.0, 0.0, 0.0);
+	   	glTexCoord2f(1.0, 0.0); glVertex3f(90.0, 0.0, 0.0);
 	   	glTexCoord2f(1.0, 1.0); glVertex3f(90.0, 0.0, -90.0);
 	   	glTexCoord2f(0.0, 1.0); glVertex3f(0.0, 0.0, -90.0);
 	glEnd();
