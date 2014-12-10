@@ -510,6 +510,23 @@ void Man::writeData()
 /*******************************************************************************
  *  DRAWING STUFF
  *******************************************************************************/
+void draw_fountain() {
+	glPushMatrix();
+		glColor3f(0.8, 0.8, 0.8);
+		glTranslatef(45.0, 1.0, -45.0);
+		glRotatef(90.0, 1.0, 0.0, 0.0);
+		glutSolidCylinder(5.0, 1.0, 20, 20);
+
+		glColor3f(1.0, 0.0, 0.0);
+		glTranslatef(0.0, 0.0, -4.0);
+		glutSolidCylinder(2.5, 0.5, 20, 20);
+
+		glColor3f(0.4, 0.4, 0.4);
+		glTranslatef(0.0, 0.0, -2.0);
+		glutSolidCylinder(0.35, 20.0, 20, 20);
+	glPopMatrix();
+}
+
 void draw_wall(){
 	glEnable(GL_TEXTURE_2D);
 	glBegin( GL_QUADS );
@@ -546,6 +563,8 @@ void draw_wall(){
 }
 
 void draw_maze() {
+	draw_fountain();
+
 	int i;
 	glPushMatrix();
 		glPushMatrix();
