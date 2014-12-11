@@ -118,99 +118,8 @@ unsigned int LoadTexBMP(char* file)
    return texture;
 }
 
-
 /*******************************************************************
- *	2. CAMERA STUFF
-********************************************************************/
-class Camera
-{
-public:
-   Camera();
-   void incrementViewDirection();
-   void decrementViewDirection();
-   void incrementZoomDistance() { zoomDistance += 1.0; }
-   void decrementZoomDistance() { zoomDistance -= 1.0; }
-
-   float getViewDirection() const { return viewDirection; }
-   float getZoomDistance() const { return zoomDistance; }
-
-   float getX() { return xValue; }
-   float getZ() { return zValue; }
-
-   void turnRight() { 
-		if(direction == UP) {
-			xValue = -4.0;
-			zValue = -4.0;
-			direction = RIGHT;
-		} else if (direction == RIGHT) {
-			xValue = 4.0;
-			zValue = -4.0;
-			direction = DOWN;
-		} else if (direction == DOWN) {
-			xValue = 4.0; 
-			zValue = 4.0;
-			direction = LEFT;
-		} else {
-			xValue = -4.0;
-			zValue = 4.0;
-			direction = UP;
-		}
-	}
-
-	void turnLeft() {
-		if(direction == UP) {
-			xValue = 4.0; 
-			zValue = -4.0;
-			direction = LEFT;
-		} else if (direction == RIGHT) {
-			xValue = 4.0; 
-			zValue = 4.0;
-			direction = UP;
-		} else if (direction == DOWN) {
-			xValue = -4.0; 
-			zValue = 4.0;
-			direction = RIGHT;
-		} else {
-			xValue = -4.0; 
-			zValue = -4.0;
-			direction = DOWN;
-		}
-	}
-
-private:
-   float viewDirection;
-   float zoomDistance;
-   float direction;
-   float xValue;
-   float zValue;
-};
-
-// Global camera.
-Camera camera;
-
-// Camera constructor.
-Camera::Camera()
-{
-   viewDirection = 0.0;
-   zoomDistance = 10.0;
-}
-
-// Function to increment camera viewing angle.
-void Camera::incrementViewDirection()
-{
-   viewDirection += 5.0;
-   if (viewDirection > 360.0) viewDirection -= 360.0;
-}
-
-// Function to decrement camera viewing angle.
-void Camera::decrementViewDirection()
-{
-   viewDirection -= 5.0;
-   if (viewDirection < 0.0) viewDirection += 360.0;
-}
-
-/*******************************************************************
- *	3. MAN STUFF
+ *	2. MAN STUFF
 ********************************************************************/
 class Man
 {
@@ -283,7 +192,6 @@ public:
 
 	void draw();
 	void outputData();
-	void writeData();
 
 private:
    // Man configuration values.
@@ -523,81 +431,9 @@ void floatToString(char * destStr, int precision, float val)
 	destStr[precision] = '\0';
 }
 
-// Routine to write configurations data.
-void Man::writeData()
-{
-   char buffer [33];
-   
-   floatToString(buffer, 4, partAngles[0]);	
-   glRasterPos3f(-28.0, 10.0, 0.0);
-   writeBitmapString((void*)font, "torso = "); 
-   glRasterPos3f(-11.0, 10.0, 0.0);
-   writeBitmapString((void*)font, buffer);
-
-   floatToString(buffer, 4, partAngles[1]);	
-   glRasterPos3f(-28.0, 8.0, 0.0);
-   writeBitmapString((void*)font, "left upper arm = "); 
-   glRasterPos3f(-11.0, 8.0, 0.0);
-   writeBitmapString((void*)font, buffer);
-
-   floatToString(buffer, 4, partAngles[2]);	
-   glRasterPos3f(-28.0, 6.0, 0.0);
-   writeBitmapString((void*)font, "left lower arm = "); 
-   glRasterPos3f(-11.0, 6.0, 0.0);
-   writeBitmapString((void*)font, buffer);
-
-   floatToString(buffer, 4, partAngles[3]);	
-   glRasterPos3f(-28.0, 4.0, 0.0);
-   writeBitmapString((void*)font, "right upper arm = "); 
-   glRasterPos3f(-11.0, 4.0, 0.0);
-   writeBitmapString((void*)font, buffer);
-
-   floatToString(buffer, 4, partAngles[4]);	
-   glRasterPos3f(-28.0, 2.0, 0.0);
-   writeBitmapString((void*)font, "right lower arm = "); 
-   glRasterPos3f(-11.0, 2.0, 0.0);
-   writeBitmapString((void*)font, buffer);
-
-   floatToString(buffer, 4, partAngles[5]);	
-   glRasterPos3f(-28.0, 0.0, 0.0);
-   writeBitmapString((void*)font, "left uppper leg = "); 
-   glRasterPos3f(-11.0, 0.0, 0.0);
-   writeBitmapString((void*)font, buffer);
-
-   floatToString(buffer, 4, partAngles[6]);	
-   glRasterPos3f(-28.0, -2.0, 0.0);
-   writeBitmapString((void*)font, "left lower leg = "); 
-   glRasterPos3f(-11.0, -2.0, 0.0);
-   writeBitmapString((void*)font, buffer);
-
-   floatToString(buffer, 4, partAngles[7]);	
-   glRasterPos3f(-28.0, -4.0, 0.0);
-   writeBitmapString((void*)font, "right upper leg = "); 
-   glRasterPos3f(-11.0, -4.0, 0.0);
-   writeBitmapString((void*)font, buffer);
-
-   floatToString(buffer, 4, partAngles[8]);	
-   glRasterPos3f(-28.0, -6.0, 0.0);
-   writeBitmapString((void*)font, "right lower leg = "); 
-   glRasterPos3f(-11.0, -6.0, 0.0);
-   writeBitmapString((void*)font, buffer);
-
-   floatToString(buffer, 4, upMove);	
-   glRasterPos3f(-28.0, -8.0, 0.0);
-   writeBitmapString((void*)font, "upMove = "); 
-   glRasterPos3f(-11.0, -8.0, 0.0);
-   writeBitmapString((void*)font, buffer);
-
-   floatToString(buffer, 4, forwardMove);	
-   glRasterPos3f(-28.0, -10.0, 0.0);
-   writeBitmapString((void*)font, "forwardMove = "); 
-   glRasterPos3f(-11.0, -10.0, 0.0);
-   writeBitmapString((void*)font, buffer);
-}
-
 
 /*******************************************************************************
- *  4. DRAWING STUFF
+ *  3. DRAWING STUFF
  *******************************************************************************/
 void draw_fountain() {
 	GLUquadricObj *obj = gluNewQuadric();	// mac

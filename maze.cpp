@@ -127,12 +127,6 @@ void keyboard(unsigned char key, int x, int y) {
 		case 'w':
 			person_z -= 2;
 			break;
-		case 'a':
-			camera.incrementViewDirection();
-			break;
-		case 'd':
-			camera.decrementViewDirection();
-			break;
 		case 'p':
 			mode = PLAYER_MODE;
 			break;
@@ -152,7 +146,6 @@ void keyboard(unsigned char key, int x, int y) {
 void keyboard2(int key, int x, int y) {
 	switch(key) {
 		case GLUT_KEY_LEFT:
-			camera.turnLeft();
 			direction = manVectorIterator->turnLeft();
 			if(direction == LEFT){
 				eyex = 9.0;
@@ -172,7 +165,6 @@ void keyboard2(int key, int x, int y) {
 			}
 			break;
 		case GLUT_KEY_RIGHT:
-			camera.turnRight();
 			direction = manVectorIterator->turnRight();
 			if(direction == RIGHT){
 				eyex = 1.0;
